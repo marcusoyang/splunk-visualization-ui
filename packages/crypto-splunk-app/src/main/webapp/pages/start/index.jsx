@@ -1,19 +1,32 @@
 import React from 'react';
 
 import layout from '@splunk/react-page';
-import TotalMarketCap from '@splunk/total-market-cap';
+import SplunkThemeProvider from '@splunk/themes/SplunkThemeProvider';
 import { getUserTheme } from '@splunk/splunk-utils/themes';
+import CardLayout from '@splunk/react-ui/CardLayout';
+import Card from '@splunk/react-ui/Card';
 
 import { StyledContainer, StyledGreeting } from './StartStyles';
+import TotalMarketCap from './TotalMarketCap';
+import LineGraphList from './LineGraphList';
+import MarketCapList from './MarketCapList';
 
 getUserTheme()
     .then((theme) => {
         layout(
-            <StyledContainer>
-                <StyledGreeting>Hello, from inside CryptoSplunkApp!</StyledGreeting>
-                <div>Your component will appear below.</div>
-                <TotalMarketCap name="from inside TotalMarketCap" />
-            </StyledContainer>,
+            <SplunkThemeProvider family="enterprise" colorScheme="light" density="comfortable">
+                <StyledContainer>
+                    <StyledGreeting>Welcome to the cryptocurrency dashboard!</StyledGreeting>
+                    {/* <div>Your component will appear below.</div> */}
+                    <CardLayout style={{ maxWidth: 1600 }}>
+                        <Card style={{ minWidth: 300 }}>
+                            <TotalMarketCap />
+                        </Card>
+                        <MarketCapList />
+                        <LineGraphList />
+                    </CardLayout>
+                </StyledContainer>
+            </SplunkThemeProvider>,
             {
                 theme,
             }
