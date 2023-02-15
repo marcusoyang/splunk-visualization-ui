@@ -17,8 +17,12 @@ const LineGraphCard = (props) => {
     });
 
     const [columns, setColumns] = useState([]);
+    const [latestPrice, setLatestPrice] = useState(0);
 
     const name = props.type === 'market_cap' ? 'Market Cap' : 'Price';
+    const cardHeader = `${props.coin} ${name} ${
+        props.type === 'current_price' ? `| USD $${latestPrice}` : ''
+    } `;
 
     const fields = [
         {
@@ -34,6 +38,8 @@ const LineGraphCard = (props) => {
         // fetch data after our first render with a useEffect hook
         const subscription = mySearchJob.getResults().subscribe((results) => {
             // subscribe to our search results, since results.results is in the form we need, no need to do anything else
+            // setLatestPrice(JSON.parse(results.result[0]['_raw'])['current_price']);
+            setLatestPrice(JSON.parse(results.results[0]['_raw'])['current_price']);
             const times = results.results.map((result) => result._time).reverse();
             const marketCap = results.results
                 .map((result) => JSON.parse(result._raw)[props.type])
@@ -46,11 +52,11 @@ const LineGraphCard = (props) => {
         return () => {
             subscription.unsubscribe();
         };
-    }, []);
+    }, [props.coin]);
 
     return (
         <Card style={{ minWidth: 700 }}>
-            <Card.Header title={`${props.coin} ${name}`} />
+            <Card.Header title={cardHeader} />
             <LineGraph data={{ fields, columns }} />
         </Card>
     );

@@ -10,6 +10,7 @@ import { StyledContainer, StyledGreeting } from './StartStyles';
 import TotalMarketCap from './TotalMarketCap';
 import LineGraphList from './LineGraphList';
 import MarketCapList from './MarketCapList';
+import GraphSelect from './GraphSelect';
 
 getUserTheme()
     .then((theme) => {
@@ -24,6 +25,10 @@ getUserTheme()
                         </Card>
                         <MarketCapList />
                         <LineGraphList />
+
+                        <Card style={{ minWidth: 300 }}>
+                            <GraphSelect />
+                        </Card>
                     </CardLayout>
                 </StyledContainer>
             </SplunkThemeProvider>,
