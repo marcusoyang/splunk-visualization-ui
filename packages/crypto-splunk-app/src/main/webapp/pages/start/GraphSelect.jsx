@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import CardLayout from '@splunk/react-ui/CardLayout';
 import Card from '@splunk/react-ui/Card';
 import LineGraphCard from './LineGraphCard';
 import SearchSymbol from './SearchSymbol';
-import CardLayout from '@splunk/react-ui/CardLayout';
 
 const GraphSelect = () => {
     const [coin, setCoin] = useState('BTC');

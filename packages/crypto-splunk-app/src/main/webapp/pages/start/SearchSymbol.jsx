@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { _ } from '@splunk/ui-utils/i18n';
 import SearchJob from '@splunk/search-job';
@@ -14,7 +14,6 @@ const SearchSymbol = (props) => {
     const mySearchJob = SearchJob.create({
         // create a search job that searches against our lookup
         search: `index=main | stats count by symbol`,
-        earliest_time: '-60m@m',
         latest_time: 'now',
     });
 

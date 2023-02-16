@@ -1,13 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SplunkThemeProvider from '@splunk/themes/SplunkThemeProvider';
-import { LabelList, Funnel, FunnelChart, Tooltip } from 'recharts';
-import Markdown from '@splunk/react-ui/Markdown';
-import Table from '@splunk/react-ui/Table';
 import Card from '@splunk/react-ui/Card';
 import SearchJob from '@splunk/search-job';
 import LineGraph from '@splunk/line-graph';
-import { StyledContainer } from './StartStyles';
 
 const LineGraphCard = (props) => {
     const mySearchJob = SearchJob.create({
@@ -38,8 +34,11 @@ const LineGraphCard = (props) => {
         // fetch data after our first render with a useEffect hook
         const subscription = mySearchJob.getResults().subscribe((results) => {
             // subscribe to our search results, since results.results is in the form we need, no need to do anything else
-            // setLatestPrice(JSON.parse(results.result[0]['_raw'])['current_price']);
-            setLatestPrice(JSON.parse(results.results[0]['_raw'])['current_price']);
+
+            const currentPrice = JSON.parse(results.results[0]._raw).current_price;
+            // add commas to the number
+            setLatestPrice(parseFloat(currentPrice, 10).toLocaleString());
+
             const times = results.results.map((result) => result._time).reverse();
             const marketCap = results.results
                 .map((result) => JSON.parse(result._raw)[props.type])
@@ -52,10 +51,11 @@ const LineGraphCard = (props) => {
         return () => {
             subscription.unsubscribe();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.coin]);
 
     return (
-        <Card style={{ minWidth: 700 }}>
+        <Card style={{ minWidth: 700 }} key={`${props.coin}_${props.type}`}>
             <Card.Header title={cardHeader} />
             <LineGraph data={{ fields, columns }} />
         </Card>

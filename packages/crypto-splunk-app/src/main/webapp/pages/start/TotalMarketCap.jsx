@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { LabelList, Funnel, FunnelChart, Tooltip } from 'recharts';
 import SearchJob from '@splunk/search-job';
 import Card from '@splunk/react-ui/Card';
 import Heading from '@splunk/react-ui/Heading';
@@ -18,7 +17,7 @@ const TotalMarketCap = () => {
         // fetch data after our first render with a useEffect hook
         const subscription = mySearchJob.getResults().subscribe((results) => {
             // subscribe to our search results, since results.results is in the form we need, no need to do anything else
-            const marketCap = results.results[0]['total_market_cap'];
+            const marketCap = results.results[0].total_market_cap;
             setTotalMarketCap(parseInt(marketCap, 10).toLocaleString());
         });
 

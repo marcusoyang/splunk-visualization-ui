@@ -28,13 +28,13 @@ const MarketCapNode = (props) => {
         // fetch data after our first render with a useEffect hook
         const marketCapSearchSub = marketCapSearch.getResults().subscribe((results) => {
             // subscribe to our search results, since results.results is in the form we need, no need to do anything else
-            const marketCap = results.results[0]['market_cap'];
+            const marketCap = results.results[0].market_cap;
             setCoinMarketCap(parseInt(marketCap, 10).toLocaleString());
         });
 
         const marketCapChangeSearchSub = marketCapChangeSearch.getResults().subscribe((results) => {
             // subscribe to our search results, since results.results is in the form we need, no need to do anything else
-            const marketCapChangeRes = results.results[0]['percentage_change'];
+            const marketCapChangeRes = results.results[0].percentage_change;
             setMarketCapChange(parseFloat(marketCapChangeRes, 10).toFixed(3));
         });
 
@@ -43,6 +43,7 @@ const MarketCapNode = (props) => {
             marketCapSearchSub.unsubscribe();
             marketCapChangeSearchSub.unsubscribe();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
