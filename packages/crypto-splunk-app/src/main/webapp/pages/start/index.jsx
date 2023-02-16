@@ -25,7 +25,6 @@ getUserTheme()
                         </Card>
                         <MarketCapList />
                         <LineGraphList />
-
                         <Card style={{ minWidth: 300 }}>
                             <GraphSelect />
                         </Card>
@@ -38,7 +37,5 @@ getUserTheme()
         );
     })
     .catch((e) => {
-        const errorEl = document.createElement('span');
-        errorEl.innerHTML = e;
-        document.body.appendChild(errorEl);
+        layout(<div>{e.message}</div>);
     });

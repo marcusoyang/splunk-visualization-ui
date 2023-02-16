@@ -12,7 +12,7 @@ const SearchSymbol = (props) => {
     const [val, setVal] = useState('');
 
     const mySearchJob = SearchJob.create({
-        // create a search job that searches against our lookup
+        // create a search job for every unique symbol
         search: `index=main | stats count by symbol`,
         latest_time: 'now',
     });
@@ -36,11 +36,13 @@ const SearchSymbol = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // when the user selects a symbol
     const handleChange = (e, { value }) => {
         props.setCoin(value);
         setVal(value);
     };
 
+    // when the user types in the search box
     const handleFilterChange = (e, { keyword }) => {
         setVal(keyword);
         setIsLoading(true);
@@ -51,12 +53,8 @@ const SearchSymbol = (props) => {
         setIsLoading(false);
     };
 
+    // create selectable options
     const createOption = (symbol, isSelected = false) => (
-        /**
-         * Filtering is done server-side and the `matchRanges` prop would be either
-         * be provided by the server, deduced based on the match algorithm, or omitted.
-         * To simplify this example, the search value only matches the beginning of the title.
-         */
         <Select.Option
             label={symbol}
             value={symbol}

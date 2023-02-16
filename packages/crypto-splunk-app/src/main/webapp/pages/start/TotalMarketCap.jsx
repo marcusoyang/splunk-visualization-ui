@@ -6,7 +6,6 @@ import Heading from '@splunk/react-ui/Heading';
 const mySearchJob = SearchJob.create({
     // create a search job that searches against our lookup
     search: 'index=main | stats latest(market_cap) as market_cap by name | dedup name | eval total_market_cap=market_cap | stats sum(total_market_cap) as total_market_cap | table total_market_cap ',
-    earliest_time: '-60m@m',
     latest_time: 'now',
 });
 

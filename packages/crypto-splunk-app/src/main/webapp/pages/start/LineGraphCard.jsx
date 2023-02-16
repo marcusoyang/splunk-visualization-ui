@@ -7,7 +7,7 @@ import LineGraph from '@splunk/line-graph';
 
 const LineGraphCard = (props) => {
     const mySearchJob = SearchJob.create({
-        // create a search job that searches against our lookup
+        // create a search job for coin history
         search: `index=main symbol=${props.coin}`,
         latest_time: 'now',
     });
@@ -15,6 +15,7 @@ const LineGraphCard = (props) => {
     const [columns, setColumns] = useState([]);
     const [latestPrice, setLatestPrice] = useState(0);
 
+    // set the name and header of the card
     const name = props.type === 'market_cap' ? 'Market Cap' : 'Price';
     const cardHeader = `${props.coin} ${name} ${
         props.type === 'current_price' ? `| USD $${latestPrice}` : ''
